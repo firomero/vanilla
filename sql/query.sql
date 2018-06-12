@@ -1,0 +1,1 @@
+select * from employee inner join translation on employee.id = translation.id;
