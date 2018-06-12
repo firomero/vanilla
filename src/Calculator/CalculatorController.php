@@ -8,7 +8,8 @@ class CalculatorController
    }
 
    public function calculateAction(){
-       $data = $_POST['data'];
+       $object = json_decode($_POST['data'],true);
+       $data = $object['data'];
        if (!empty($data)) {
            $service= new CalculatorService();
            http_response_code(200);

@@ -44,18 +44,22 @@ class CalculatorService
         $result = array(
             'value'=>$data['value'],
             'rows'=>array(),
-            'totalCost'=> 0
+            'totalCost'=> 0,
+            'instalment'=>$data['instalment']
         );
         $instalment = intval($data['instalment']);
         for ($i=0;$i<$instalment;$i++){
-            $base = $this->basePrice(floatval($data['value'])/$instalment);
+            $base = $this->basePrice($data['value']/$instalment);
             $commission = $this->getCommission($base);
             $tax = $this->getTax($data['tax'],$base);
-            $result['rows']['base'] = $base;
-            $result['rows']['commission'] = $commission;
-            $result['rows']['tax'] = $tax;
-            $result['rows']['total'] = $base + $commission + $tax;
-            $result['totalCost']+=$base+$commission+$tax;
+            $result['rows'][]=array(
+                'base'=>round($base,2),
+                'commission'=>round($commission,2),
+                'tax'=>round($tax,2),
+                'total'=>round($base + $commission + $tax,2)
+            );
+
+            $result['totalCost']+=round($base+$commission+$tax,2);
         }
         $result['totalCost'] = round($result['totalCost'],2);
         return $result;

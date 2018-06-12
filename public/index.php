@@ -3,8 +3,9 @@ require_once("../src/Calculator/CalculatorService.php");
 require_once("../src/Calculator/CalculatorController.php");
 $controller  = new CalculatorController();
 $routes = ['welcome', 'calculate'];
-$uri = explode('/', $_SERVER['REQUEST_URI']);
+$uri = explode('/', $_SERVER['PATH_INFO']);
 $action = $uri[1];
+header('Content-Type: application/json');
 try{
     if (in_array($action,$routes)) {
         $method = $action."Action";
